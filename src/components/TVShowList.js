@@ -1,4 +1,5 @@
 import React from "react";
+import TVShow from "./TVShow"
 import { Grid } from "semantic-ui-react";
 
 function TVShowList(props) {
