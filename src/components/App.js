@@ -15,8 +15,7 @@ function App() {
   useEffect(() => {
     fetch("http://api.tvmaze.com/shows")
     .then(r => r.json())
-    .then(shows => {setShows(shows)
-      console.log(shows)});
+    .then(shows => {setShows(shows)})
   }, []);
 
   useEffect(() => {
@@ -34,9 +33,11 @@ function App() {
   }
 
   function selectShow(show) {
-    Adapter.getShowEpisodes(show.id).then((episodes) => {
+    fetch(`http://api.tvmaze.com/shows/${show.id}/episodes`)
+    .then(r => r.json())
+    .then((data) => {
       setSelectedShow(show);
-      setEpisodes(episodes);
+      setEpisodes(data);
     });
   }
 
@@ -57,7 +58,7 @@ function App() {
           {!!selectedShow ? (
             <SelectedShowContainer
               selectedShow={selectedShow}
-              allEpisodes={episodes}
+              episodes={episodes}
             />
           ) : (
             <div />
