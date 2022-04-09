@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "semantic-ui-react";
-import Adapter from "../Adapter";
 import TVShowList from "./TVShowList";
 import Nav from "./Nav";
 import SelectedShowContainer from "./SelectedShowContainer";
@@ -22,7 +21,7 @@ function App() {
     window.scrollTo(0, 0);
   });
 
-  function handleSearch(e) {
+  function handleSearchInput(e) {
     setSearchTerm(e.target.value.toLowerCase());
   }
 
@@ -46,11 +45,15 @@ function App() {
     displayShows = displayShows.filter((s) => s.rating.average >= filterByRating);
   }
 
+  if (searchTerm) {
+    displayShows = displayShows.filter((s) => s.name.toLowerCase().includes(searchTerm));
+  }
+
   return (
     <div>
       <Nav
         handleFilter={handleFilter}
-        handleSearch={handleSearch}
+        handleSearch={handleSearchInput}
         searchTerm={searchTerm}
       />
       <Grid celled>
