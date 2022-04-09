@@ -3,33 +3,32 @@ import Episode from "./Episode";
 
 function SelectedShowContainer(props) {
 
-  const selectedSeason = useState(1);
+  const [selectedSeason, setSelectedSeason] = useState(1);
 
   function mapSeasons() {
     if (!!props.episodes) {
-      console.log(props.episodes)
-      // let seasons = props.episodes.map((e) => e.season).unique();
+      let seasons = props.episodes.map((e) => e.season).unique();
 
-      // return seasons.map((s) => {
-      //   return (
-      //     <option value={s} key={s}>
-      //       Season {s}
-      //     </option>
-      //   );
-      // });
+      return seasons.map((s) => {
+        return (
+          <option value={s} key={s}>
+            Season {s}
+          </option>
+        );
+      });
     }
   }
 
   function mapEpisodes() {
-    return props.episodes.map((e) => {
-      if (e.season == selectedSeason) {
-        return <Episode eachEpisode={e} key={e.id} />;
+    return props.episodes.map((ep) => {
+      if (ep.season == selectedSeason) {
+        return <Episode episode={ep} key={ep.id} />;
       }
     });
   }
 
   function handleSelectionChange(e) {
-    selectedSeason = e.target.value;
+    setSelectedSeason(selectedSeason => selectedSeason = e.target.value);
   }
 
   const { selectedShow } = props;
@@ -45,7 +44,7 @@ function SelectedShowContainer(props) {
       <select style={{ display: "block" }} onChange={handleSelectionChange}>
         {mapSeasons()}
       </select>
-      {mapEpisodes()}
+        {mapEpisodes()}
     </div>
   );
 }
